@@ -21,7 +21,15 @@ const commentSchema = new mongoose.Schema(
     numberOfLikes: {
       type: Number,
       default: 0,
-    },
+    }, 
+    sentimentLabel: {
+        type: String,
+        required: true,
+      },
+      sentimentConfidence: {
+        type: Number,
+        default: 0,
+      },
   },
   { timestamps: true }
 );

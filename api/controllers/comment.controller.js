@@ -2,18 +2,23 @@ import Comment from '../models/comment.model.js';
 
 export const createComment = async (req, res, next) => {
   try {
-    const { content, postId, userId } = req.body;
+    const { content, postId, userId, sentimentLabel, sentimentConfidence } = req.body;
+
+    //console.log(req.body);
 
     if (userId !== req.user.id) {
       return next(
         errorHandler(403, 'You are not allowed to create this comment')
       );
     }
-
+    // console.log("inside create comment");
+    // console.log(sentimentConfidence);
     const newComment = new Comment({
       content,
       postId,
       userId,
+      sentimentLabel,
+      sentimentConfidence,
     });
     await newComment.save();
 

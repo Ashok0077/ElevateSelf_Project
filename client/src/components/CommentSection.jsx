@@ -70,10 +70,10 @@ export default function CommentSection({ postId }) {
         },
         body: JSON.stringify({
           content: comment,
-          sentimentLabel: sentimentLabel, // Store sentiment along with the comment
-          sentimentConfidence: sentimentConfidence,
           postId,
           userId: currentUser._id,
+          sentimentLabel: sentimentLabel, 
+          sentimentConfidence: sentimentConfidence,
         }),
       });
       const data = await res.json();
