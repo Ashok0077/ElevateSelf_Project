@@ -16,7 +16,7 @@ export default function DashUsers() {
   useEffect(() => {
     const fetchUsers = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/user/getusers`, {
+        const res = await fetch(`/api/user/getusers`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -41,15 +41,12 @@ export default function DashUsers() {
   const handleShowMore = async () => {
     const startIndex = users.length;
     try {
-      const res = await fetch(
-        `${BASE_URL}/api/user/getusers?startIndex=${startIndex}`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`/api/user/getusers?startIndex=${startIndex}`, {
+        method: "GET",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       const data = await res.json();
       if (res.ok) {
         setUsers((prev) => [...prev, ...data.users]);
@@ -65,7 +62,7 @@ export default function DashUsers() {
   const handleDeleteUser = async () => {
     try {
       const token = localStorage.getItem("token");
-      const res = await fetch(`${BASE_URL}/api/user/delete/${userIdToDelete}`, {
+      const res = await fetch(`/api/user/delete/${userIdToDelete}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`,

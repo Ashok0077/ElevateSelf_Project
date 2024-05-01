@@ -16,7 +16,7 @@ export default function DashComments() {
   useEffect(() => {
     const fetchComments = async () => {
       try {
-        const res = await fetch(`${BASE_URL}/api/comment/getcomments`, {
+        const res = await fetch(`/api/comment/getcomments`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -42,7 +42,7 @@ export default function DashComments() {
     const startIndex = comments.length;
     try {
       const res = await fetch(
-        `${BASE_URL}/api/comment/getcomments?startIndex=${startIndex}`,
+        `/api/comment/getcomments?startIndex=${startIndex}`,
         {
           method: "GET",
           headers: {
@@ -67,7 +67,7 @@ export default function DashComments() {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `${BASE_URL}/api/comment/deleteComment/${commentIdToDelete}`,
+        `/api/comment/deleteComment/${commentIdToDelete}`,
         {
           method: "DELETE",
           headers: {

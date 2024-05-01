@@ -44,7 +44,6 @@ export default function CommentSection({ postId }) {
   //   }
   // };
 
-
   //Start of the code updated by me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
   const handleSubmit = async (e) => {
@@ -56,22 +55,25 @@ export default function CommentSection({ postId }) {
       // Analyze sentiment
       const sentimentRes = await analyzeSentiment(comment);
       const sentiment = sentimentRes.sentiment;
-      const sentimentLabel = sentiment > 0 ? "Positive" : sentiment < 0 ? "Negative" : "Neutral";
+      const sentimentLabel =
+        sentiment > 0 ? "Positive" : sentiment < 0 ? "Negative" : "Neutral";
       const sentimentConfidence = (Math.abs(sentiment) * 100).toFixed(2);
-  
+
       console.log(sentimentLabel);
       console.log(sentimentConfidence);
       // Store comment with sentiment in MongoDB
-      const res = await fetch(`${BASE_URL}/api/comment/create`, {
+      const res = await fetch(`/api/comment/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
         },
         body: JSON.stringify({
           content: comment,
           sentimentLabel: sentimentLabel, // Store sentiment along with the comment
           sentimentConfidence: sentimentConfidence,
           postId,
+          userId: currentUser._id,
         }),
       });
       const data = await res.json();
@@ -84,7 +86,7 @@ export default function CommentSection({ postId }) {
       setCommentError(error.message);
     }
   };
-  
+
   // Function to analyze sentiment
   const analyzeSentiment = async (text) => {
     try {
@@ -98,20 +100,17 @@ export default function CommentSection({ postId }) {
       const data = await res.json();
       return data;
     } catch (error) {
-      console.error('Error:', error);
+      console.error("Error:", error);
       throw new Error("Failed to analyze sentiment");
     }
   };
-
 
   // End of the code updated by me!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!S
 
   useEffect(() => {
     const getComments = async () => {
       try {
-        const res = await fetch(
-          `${BASE_URL}/api/comment/getPostComments/${postId}`
-        );
+        const res = await fetch(`/api/comment/getPostComments/${postId}`);
         if (res.ok) {
           const data = await res.json();
           setComments(data);
@@ -129,15 +128,12 @@ export default function CommentSection({ postId }) {
         navigate("/sign-in");
         return;
       }
-      const res = await fetch(
-        `${BASE_URL}/api/comment/likeComment/${commentId}`,
-        {
-          method: "PUT",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`/api/comment/likeComment/${commentId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.ok) {
         const data = await res.json();
         setComments(
@@ -172,15 +168,12 @@ export default function CommentSection({ postId }) {
         navigate("/sign-in");
         return;
       }
-      const res = await fetch(
-        `${BASE_URL}/api/comment/deleteComment/${commentId}`,
-        {
-          method: "DELETE",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const res = await fetch(`/api/comment/deleteComment/${commentId}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
       if (res.ok) {
         const data = await res.json();
         setComments(comments.filter((comment) => comment._id !== commentId));

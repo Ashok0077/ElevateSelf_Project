@@ -29,7 +29,7 @@ export default function DashSidebar() {
   }, [location.search]);
   const handleSignout = async () => {
     try {
-      const res = await fetch(`${BASE_URL}/api/user/signout`, {
+      const res = await fetch(`/api/user/signout`, {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,

@@ -17,7 +17,7 @@ export default function DashPosts() {
     const fetchPosts = async () => {
       try {
         // const res = await fetch(`/api/post/getposts?userId=${currentUser._id}`);
-        const res = await fetch(`${BASE_URL}/api/post/getposts`, {
+        const res = await fetch(`/api/post/getposts`, {
           method: "GET",
           headers: {
             Authorization: `Bearer ${token}`,
@@ -43,7 +43,7 @@ export default function DashPosts() {
     const startIndex = userPosts.length;
     try {
       const res = await fetch(
-        `${BASE_URL}/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`,
+        `/api/post/getposts?userId=${currentUser._id}&startIndex=${startIndex}`,
         {
           method: "GET",
           headers: {
@@ -68,7 +68,7 @@ export default function DashPosts() {
     try {
       const token = localStorage.getItem("token");
       const res = await fetch(
-        `${BASE_URL}/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
+        `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: "DELETE",
           headers: {

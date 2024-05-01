@@ -42,7 +42,7 @@ export default function Search() {
         searchQuery = ""; // Empty the search query to retrieve all posts
       }
 
-      const res = await fetch(`${BASE_URL}/api/post/getposts?${searchQuery}`);
+      const res = await fetch(`/api/post/getposts?${searchQuery}`);
       if (!res.ok) {
         setLoading(false);
         return;
@@ -92,7 +92,7 @@ export default function Search() {
     const urlParams = new URLSearchParams(location.search);
     urlParams.set("startIndex", startIndex);
     const searchQuery = urlParams.toString();
-    const res = await fetch(`${BASE_URL}/api/post/getposts?${searchQuery}`);
+    const res = await fetch(`/api/post/getposts?${searchQuery}`);
     if (!res.ok) {
       return;
     }
