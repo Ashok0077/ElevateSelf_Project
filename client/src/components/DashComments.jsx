@@ -95,9 +95,10 @@ export default function DashComments() {
         <>
           <Table hoverable className="shadow-md">
             <Table.Head>
-              <Table.HeadCell>Date updated</Table.HeadCell>
-              <Table.HeadCell>Comment content</Table.HeadCell>
+              <Table.HeadCell>Date Updated</Table.HeadCell>
+              <Table.HeadCell>Comment Content</Table.HeadCell>
               <Table.HeadCell>Number of likes</Table.HeadCell>
+              <Table.HeadCell>Comment Sentiment</Table.HeadCell>
               <Table.HeadCell>PostId</Table.HeadCell>
               <Table.HeadCell>UserId</Table.HeadCell>
               <Table.HeadCell>Delete</Table.HeadCell>
@@ -110,6 +111,10 @@ export default function DashComments() {
                   </Table.Cell>
                   <Table.Cell>{comment.content}</Table.Cell>
                   <Table.Cell>{comment.numberOfLikes}</Table.Cell>
+                  <Table.Cell>
+                    {`${comment?.sentimentLabel} (${comment?.sentimentConfidence}%)` ||
+                      "Neutral"}
+                  </Table.Cell>
                   <Table.Cell>{comment.postId}</Table.Cell>
                   <Table.Cell>{comment.userId}</Table.Cell>
                   <Table.Cell>

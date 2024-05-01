@@ -1,4 +1,4 @@
-import mongoose from 'mongoose';
+import mongoose from "mongoose";
 
 const commentSchema = new mongoose.Schema(
   {
@@ -21,19 +21,20 @@ const commentSchema = new mongoose.Schema(
     numberOfLikes: {
       type: Number,
       default: 0,
-    }, 
+    },
     sentimentLabel: {
-        type: String,
-        required: true,
-      },
-      sentimentConfidence: {
-        type: Number,
-        default: 0,
-      },
+      type: String,
+      default: "Neutral",
+      required: true,
+    },
+    sentimentConfidence: {
+      type: Number,
+      default: 0,
+    },
   },
   { timestamps: true }
 );
 
-const Comment = mongoose.model('Comment', commentSchema);
+const Comment = mongoose.model("Comment", commentSchema);
 
 export default Comment;
