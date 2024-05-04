@@ -23,6 +23,7 @@ export default function DashUsers() {
           },
         });
         const data = await res.json();
+        //console.log(data);
         if (res.ok) {
           setUsers(data.users);
           if (data.users.length < 9) {
