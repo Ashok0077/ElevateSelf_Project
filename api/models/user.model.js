@@ -25,6 +25,10 @@ const userSchema = new mongoose.Schema(
       type: Boolean,
       default: false,
     },
+    personalizeKeyword: {
+      type: [String], 
+      default: [], 
+    },
   },
   { timestamps: true }
 );
