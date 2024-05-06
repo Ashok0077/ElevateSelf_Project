@@ -8,6 +8,7 @@ import { BASE_URL } from "../baseUrl";
 export default function MyPosts() {
   const { currentUser } = useSelector((state) => state.user);
   const [userPosts, setUserPosts] = useState([]);
+  const token = localStorage.getItem("token");
   const [showMore, setShowMore] = useState(true);
   const [showModal, setShowModal] = useState(false);
   const [postIdToDelete, setPostIdToDelete] = useState("");
@@ -58,6 +59,9 @@ export default function MyPosts() {
         `/api/post/deletepost/${postIdToDelete}/${currentUser._id}`,
         {
           method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
         }
       );
       const data = await res.json();
