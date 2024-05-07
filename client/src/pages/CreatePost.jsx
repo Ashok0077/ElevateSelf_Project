@@ -107,12 +107,15 @@ export default function CreatePost() {
             }
           >
             <option value="selfImprovement">Select a category</option>
-            <option value="fitness">Fitness</option>
-            <option value="nutrition">Nutrition</option>
+            <option value="Personal development">Personal development</option>
             <option value="placements">Placements</option>
             <option value="motivation">Motivational</option>
             <option value="career">Career</option>
-            <option value="relationship">Relationship</option>
+            <option value="NEET">NEET</option>
+            <option value="JEE">JEE</option>
+            <option value="start up">Start up</option>
+            <option value="career guidence">Career guidence</option>
+            <option value="government job">Government job</option>    
             <option value="financial">Financial</option>
           </Select>
         </div>
