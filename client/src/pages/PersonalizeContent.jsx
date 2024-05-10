@@ -40,7 +40,7 @@ export default function PersonalizeContent() {
 
   const filteredPosts = [];
 
-  for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
+  for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
     for (let j = 0; j < posts.length; j++) {
       if (currentUser.personalizeKeyword[i] === posts[j].category) {
         filteredPosts.push(posts[j]);
@@ -68,9 +68,10 @@ export default function PersonalizeContent() {
               No personalized posts found.
             </div>
             <div className=" text-center text-teal-500 my-10">
-            Our recommendation system works based on previous interactions, <br/>
-            but since you are a new user, it hasn't had the chance <br/>
-            to learn from your interactions yet.
+              Our recommendation system works based on previous interactions,{" "}
+              <br />
+              but since you are a new user, it hasn't had the chance <br />
+              to learn from your interactions yet.
             </div>
           </div>
         )}

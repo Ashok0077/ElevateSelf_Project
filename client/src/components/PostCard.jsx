@@ -17,30 +17,31 @@ export default function PostCard({ post }) {
         console.log("Current user not found");
         return;
       }
-       
-     // console.log(currentUser.personalizeKeyword);
+
+      // console.log(currentUser.personalizeKeyword);
       // Create an array to hold the updated keywords
       const updatedKeywords = [post.category];
 
-     
-      for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
+      for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
         if (currentUser.personalizeKeyword[i] !== post.category) {
           updatedKeywords.push(currentUser.personalizeKeyword[i]);
         }
       }
 
-     // console.log("after adding keyword");
-     // console.log(updatedKeywords);
+      // console.log("after adding keyword");
+      // console.log(updatedKeywords);
 
-      
-      const response = await fetch(`api/user/updateKeywords/${currentUser._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, 
-        },
-        body: JSON.stringify({ personalizeKeyword: updatedKeywords }),
-      });
+      const response = await fetch(
+        `api/user/updateKeywords/${currentUser._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ personalizeKeyword: updatedKeywords }),
+        }
+      );
 
       const data = await response.json();
       if (!response.ok) {
@@ -51,8 +52,8 @@ export default function PostCard({ post }) {
         setUpdateUserSuccess("User's profile updated successfully");
       }
     } catch (error) {
-      console.error('Error updating keywords:', error);
-      setUpdateUserError('Error updating keywords');
+      console.error("Error updating keywords:", error);
+      setUpdateUserError("Error updating keywords");
     }
   };
 
@@ -61,6 +62,7 @@ export default function PostCard({ post }) {
       <Link to={`/post/${post.slug}`}>
         <img
           src={post.image}
+          onClick={handleClick}
           alt="post cover"
           className="h-[260px] w-full  object-cover group-hover:h-[200px] transition-all duration-300 z-20 cursor-pointer"
         />
@@ -79,4 +81,3 @@ export default function PostCard({ post }) {
     </div>
   );
 }
-
