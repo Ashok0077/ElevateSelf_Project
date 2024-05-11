@@ -17,6 +17,7 @@ export default function PostCard({ post }) {
         console.log("Current user not found");
         return;
       }
+<<<<<<< HEAD
   
       
       const updatedKeywords = [post.category];
@@ -26,10 +27,19 @@ export default function PostCard({ post }) {
   
       
       for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
+=======
+
+      // console.log(currentUser.personalizeKeyword);
+      // Create an array to hold the updated keywords
+      const updatedKeywords = [post.category];
+
+      for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
+>>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
         if (currentUser.personalizeKeyword[i] !== post.category) {
           updatedKeywords.push(currentUser.personalizeKeyword[i]);
         }
       }
+<<<<<<< HEAD
   
       
       for (let i = 0; i < currentUser.favoriteAuthors.length; i++) {
@@ -53,6 +63,23 @@ export default function PostCard({ post }) {
         },
         body: JSON.stringify(combinedUpdates),
       });
+=======
+
+      // console.log("after adding keyword");
+      // console.log(updatedKeywords);
+
+      const response = await fetch(
+        `api/user/updateKeywords/${currentUser._id}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ personalizeKeyword: updatedKeywords }),
+        }
+      );
+>>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
 
       const data = await response.json();
       if (!response.ok) {
@@ -62,9 +89,15 @@ export default function PostCard({ post }) {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
       }
+<<<<<<< HEAD
      } catch (error) {
       console.error('Error updating keywords:', error);
       setUpdateUserError('Error updating keywords');
+=======
+    } catch (error) {
+      console.error("Error updating keywords:", error);
+      setUpdateUserError("Error updating keywords");
+>>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
     }
 
   };
@@ -74,6 +107,7 @@ export default function PostCard({ post }) {
       <Link to={`/post/${post.slug}`}>
         <img
           src={post.image}
+          onClick={handleClick}
           alt="post cover"
           className="h-[260px] w-full  object-cover group-hover:h-[200px] transition-all duration-300 z-20 cursor-pointer"
         />
@@ -92,4 +126,3 @@ export default function PostCard({ post }) {
     </div>
   );
 }
-

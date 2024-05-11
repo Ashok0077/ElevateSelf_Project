@@ -40,8 +40,18 @@ export default function PersonalizeContent() {
 
 const filteredPosts = new Set();
 
+<<<<<<< HEAD
 const personalizedKeywords = currentUser.personalizeKeyword;
 const favoriteAuthors = currentUser.favoriteAuthors;
+=======
+  for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
+    for (let j = 0; j < posts.length; j++) {
+      if (currentUser.personalizeKeyword[i] === posts[j].category) {
+        filteredPosts.push(posts[j]);
+      }
+    }
+  }
+>>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
 
 if (personalizedKeywords.length > 0 && favoriteAuthors.length > 0) {
   // Iterate through both arrays
@@ -87,9 +97,10 @@ if (personalizedKeywords.length > 0) {
               No personalized posts found.
             </div>
             <div className=" text-center text-teal-500 my-10">
-            Our recommendation system works based on previous interactions, <br/>
-            but since you are a new user, it hasn't had the chance <br/>
-            to learn from your interactions yet.
+              Our recommendation system works based on previous interactions,{" "}
+              <br />
+              but since you are a new user, it hasn't had the chance <br />
+              to learn from your interactions yet.
             </div>
           </div>
         )}
