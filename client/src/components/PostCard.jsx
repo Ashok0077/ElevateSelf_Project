@@ -17,29 +17,41 @@ export default function PostCard({ post }) {
         console.log("Current user not found");
         return;
       }
-       
-     // console.log(currentUser.personalizeKeyword);
-      // Create an array to hold the updated keywords
+  
+      
       const updatedKeywords = [post.category];
-
-     
+      const updatedAuthors = [post.userId];
+  
+      console.log(post.userId);
+  
+      
       for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
         if (currentUser.personalizeKeyword[i] !== post.category) {
           updatedKeywords.push(currentUser.personalizeKeyword[i]);
         }
       }
-
-     // console.log("after adding keyword");
-     // console.log(updatedKeywords);
-
+  
       
-      const response = await fetch(`api/user/updateKeywords/${currentUser._id}`, {
+      for (let i = 0; i < currentUser.favoriteAuthors.length; i++) {
+        if (currentUser.favoriteAuthors[i] !== post.userId) {
+          updatedAuthors.push(currentUser.favoriteAuthors[i]);
+        }
+      }
+  
+      
+      const combinedUpdates = {
+        personalizeKeyword: updatedKeywords,
+        favoriteAuthors: updatedAuthors
+      };
+  
+      
+      const response = await fetch(`api/user/updateRecommendationKeywords/${currentUser._id}`, {
         method: 'PUT',
         headers: {
           'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`, 
+          Authorization: `Bearer ${token}`,
         },
-        body: JSON.stringify({ personalizeKeyword: updatedKeywords }),
+        body: JSON.stringify(combinedUpdates),
       });
 
       const data = await response.json();
@@ -50,12 +62,13 @@ export default function PostCard({ post }) {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
       }
-    } catch (error) {
+     } catch (error) {
       console.error('Error updating keywords:', error);
       setUpdateUserError('Error updating keywords');
     }
-  };
 
+  };
+  
   return (
     <div className="group relative w-full border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[400px] transition-all">
       <Link to={`/post/${post.slug}`}>

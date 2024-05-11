@@ -117,6 +117,8 @@ export default function CreatePost() {
             <option value="career guidence">Career guidence</option>
             <option value="government job">Government job</option>    
             <option value="financial">Financial</option>
+            <option value="fitness">Fitness</option>
+            <option value="career">career after 12th</option>
           </Select>
         </div>
         <div className="flex gap-4 items-center justify-between border-4 border-teal-500 border-dotted p-3">

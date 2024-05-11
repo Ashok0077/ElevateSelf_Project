@@ -38,16 +38,35 @@ export default function PersonalizeContent() {
     );
   }
 
-  const filteredPosts = [];
+const filteredPosts = new Set();
 
-  for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
-    for (let j = 0; j < posts.length; j++) {
-      if (currentUser.personalizeKeyword[i] === posts[j].category) {
-        filteredPosts.push(posts[j]);
-      }
-    }
-  }
+const personalizedKeywords = currentUser.personalizeKeyword;
+const favoriteAuthors = currentUser.favoriteAuthors;
 
+if (personalizedKeywords.length > 0 && favoriteAuthors.length > 0) {
+  // Iterate through both arrays
+  personalizedKeywords.forEach(keyword => {
+    favoriteAuthors.forEach(author => {
+      posts.forEach(post => {
+        if (post.category === keyword && post.userId === author) {
+          filteredPosts.add(post);
+        } 
+      });
+    });
+  });
+}
+
+if (personalizedKeywords.length > 0) {
+  // Iterate through both arrays
+  personalizedKeywords.forEach(keyword => {
+      posts.forEach(post => {
+        if (post.category === keyword) {
+          filteredPosts.add(post);
+        } 
+      });
+  });
+}
+  
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -60,8 +79,8 @@ export default function PersonalizeContent() {
     <div className="max-w-7xl mx-auto p-3 flex flex-col gap-8 py-7">
       <h2 className="text-2xl font-semibold text-center">Personalized Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center md:justify-between justify-items-center">
-        {filteredPosts.length > 0 ? (
-          filteredPosts.map((post) => <PostCard key={post._id} post={post} />)
+        {filteredPosts.size > 0 ? (
+          [...filteredPosts].map((post) => <PostCard key={post._id} post={post} />)
         ) : (
           <div className="h-full col-span-3">
             <div className=" text-center font-bold text-teal-500 my-5">

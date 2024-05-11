@@ -54,29 +54,25 @@ export const updateUser = async (req, res, next) => {
   }
 };
 
-export const updateKeywords = async (req, res) => {
-  // const { userId } = req.params;
-  // const { personalizeKeyword } = req.body;
-
+export const updateRecommendationKeywords = async (req, res) => {
   try {
     const updatedUser = await User.findByIdAndUpdate(
       req.params.userId,
       {
         $set: {
           personalizeKeyword: req.body.personalizeKeyword,
+          favoriteAuthors: req.body.favoriteAuthors,
         },
       },
       { new: true }
     );
     const { password, ...rest } = updatedUser._doc;
     res.status(200).json(rest);
-    
   } catch (error) {
-    console.error('Error updating keywords:', error);
+    console.error('Error updating user profile:', error);
     res.status(500).json({ error: 'Internal server error' });
   }
 };
-
 
 
 
