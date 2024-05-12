@@ -85,6 +85,62 @@ export const getposts = async (req, res, next) => {
   }
 };
 
+export const getAllposts = async (req, res, next) => {
+  try {
+    const startIndex = parseInt(req.query.startIndex) || 0;
+    const sortDirection = req.query.order === "asc" ? 1 : -1;
+    let posts;
+
+    if (
+      req.query?.searchTerm === "" &&
+      req.query?.category === "uncategorized"
+    ) {
+      posts = await Post.find({})
+        .sort({ updatedAt: sortDirection })
+        .skip(startIndex)
+    } else {
+      posts = await Post.find({
+        ...(req.query.userId && { userId: req.query.userId }),
+        ...(req.query.category && { category: req.query.category }),
+        ...(req.query.slug && { slug: req.query.slug }),
+        ...(req.query.postId && { _id: req.query.postId }),
+        ...(req.query.searchTerm && {
+          $or: [
+            { title: { $regex: req.query.searchTerm, $options: "i" } },
+            { content: { $regex: req.query.searchTerm, $options: "i" } },
+          ],
+        }),
+      })
+        .sort({ updatedAt: sortDirection })
+        .skip(startIndex)
+    }
+
+    const totalPosts = await Post.countDocuments();
+
+    const now = new Date();
+
+    //console.log(posts);
+
+    const oneMonthAgo = new Date(
+      now.getFullYear(),
+      now.getMonth() - 1,
+      now.getDate()
+    );
+
+    const lastMonthPosts = await Post.countDocuments({
+      createdAt: { $gte: oneMonthAgo },
+    });
+
+    res.status(200).json({
+      posts,
+      totalPosts,
+      lastMonthPosts,
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 export const deletepost = async (req, res, next) => {
   // if (!req.user.isAdmin || req.user.id !== req.params.userId) {
   //   return next(errorHandler(403, "You are not allowed to delete this post"));

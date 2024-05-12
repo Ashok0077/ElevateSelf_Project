@@ -13,7 +13,7 @@ export default function PersonalizeContent() {
     const fetchPosts = async () => {
       try {
         setIsLoading(true);
-        const res = await fetch("/api/post/getPosts");
+        const res = await fetch("/api/post/getAllPosts");
         const data = await res.json();
         setPosts(data.posts);
         setIsLoading(false);
