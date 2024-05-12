@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector } from "react-redux";
+import { useSelector } from "react-redux"; 
 import { Link } from "react-router-dom";
 import { Spinner } from "flowbite-react";
 import PostCard from "../components/PostCard";
@@ -25,7 +25,8 @@ export default function PersonalizeContent() {
     fetchPosts();
   }, []);
 
-  if (!currentUser) {
+  // Check if currentUser or currentUser.personalizeKeyword is undefined
+  if (!currentUser || !currentUser.personalizeKeyword) {
     return (
       <div className="min-h-screen flex items-center justify-center">
         <div className="text-center font-bold text-teal-500 my-5 h-full flex flex-col justify-center">
@@ -38,41 +39,16 @@ export default function PersonalizeContent() {
     );
   }
 
-const filteredPosts = new Set();
-
+  const filteredPosts = [];
 
   for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
     for (let j = 0; j < posts.length; j++) {
       if (currentUser.personalizeKeyword[i] === posts[j].category) {
-        filteredPosts.add(posts[j]);
+        filteredPosts.push(posts[j]);
       }
     }
   }
 
-// if (personalizedKeywords.length > 0 && favoriteAuthors.length > 0) {
-//   // Iterate through both arrays
-//   personalizedKeywords.forEach(keyword => {
-//     favoriteAuthors.forEach(author => {
-//       posts.forEach(post => {
-//         if (post.category === keyword && post.userId === author) {
-//           filteredPosts.add(post);
-//         } 
-//       });
-//     });
-//   });
-// }
-
-// if (personalizedKeywords.length > 0) {
-//   // Iterate through both arrays
-//   personalizedKeywords.forEach(keyword => {
-//       posts.forEach(post => {
-//         if (post.category === keyword) {
-//           filteredPosts.add(post);
-//         } 
-//       });
-//   });
-// }
-  
   if (isLoading) {
     return (
       <div className="flex items-center justify-center h-screen">
@@ -85,17 +61,16 @@ const filteredPosts = new Set();
     <div className="max-w-7xl mx-auto p-3 flex flex-col gap-8 py-7">
       <h2 className="text-2xl font-semibold text-center">Personalized Posts</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 justify-center md:justify-between justify-items-center">
-        {filteredPosts.size > 0 ? (
-          [...filteredPosts].map((post) => <PostCard key={post._id} post={post} />)
+        {filteredPosts.length > 0 ? (
+          filteredPosts.map((post) => <PostCard key={post._id} post={post} />)
         ) : (
           <div className="h-full col-span-3">
             <div className=" text-center font-bold text-teal-500 my-5">
               No personalized posts found.
             </div>
             <div className=" text-center text-teal-500 my-10">
-              Our recommendation system works based on previous interactions,{" "}
-              <br />
-              but since you are a new user, it hasn't had the chance <br />
+              Our recommendation system works based on previous interactions, <br/>
+              but since you are a new user, it hasn't had the chance <br/>
               to learn from your interactions yet.
             </div>
           </div>
