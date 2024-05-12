@@ -40,42 +40,38 @@ export default function PersonalizeContent() {
 
 const filteredPosts = new Set();
 
-<<<<<<< HEAD
-const personalizedKeywords = currentUser.personalizeKeyword;
-const favoriteAuthors = currentUser.favoriteAuthors;
-=======
-  for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
+
+  for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
     for (let j = 0; j < posts.length; j++) {
       if (currentUser.personalizeKeyword[i] === posts[j].category) {
-        filteredPosts.push(posts[j]);
+        filteredPosts.add(posts[j]);
       }
     }
   }
->>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
 
-if (personalizedKeywords.length > 0 && favoriteAuthors.length > 0) {
-  // Iterate through both arrays
-  personalizedKeywords.forEach(keyword => {
-    favoriteAuthors.forEach(author => {
-      posts.forEach(post => {
-        if (post.category === keyword && post.userId === author) {
-          filteredPosts.add(post);
-        } 
-      });
-    });
-  });
-}
+// if (personalizedKeywords.length > 0 && favoriteAuthors.length > 0) {
+//   // Iterate through both arrays
+//   personalizedKeywords.forEach(keyword => {
+//     favoriteAuthors.forEach(author => {
+//       posts.forEach(post => {
+//         if (post.category === keyword && post.userId === author) {
+//           filteredPosts.add(post);
+//         } 
+//       });
+//     });
+//   });
+// }
 
-if (personalizedKeywords.length > 0) {
-  // Iterate through both arrays
-  personalizedKeywords.forEach(keyword => {
-      posts.forEach(post => {
-        if (post.category === keyword) {
-          filteredPosts.add(post);
-        } 
-      });
-  });
-}
+// if (personalizedKeywords.length > 0) {
+//   // Iterate through both arrays
+//   personalizedKeywords.forEach(keyword => {
+//       posts.forEach(post => {
+//         if (post.category === keyword) {
+//           filteredPosts.add(post);
+//         } 
+//       });
+//   });
+// }
   
   if (isLoading) {
     return (

@@ -17,70 +17,43 @@ export default function PostCard({ post }) {
         console.log("Current user not found");
         return;
       }
-<<<<<<< HEAD
-  
-      
+
       const updatedKeywords = [post.category];
       const updatedAuthors = [post.userId];
-  
-      console.log(post.userId);
-  
-      
+
+      //console.log(post.userId);
+
       for (let i = 0; i < currentUser.personalizeKeyword.length; i++) {
-=======
-
-      // console.log(currentUser.personalizeKeyword);
-      // Create an array to hold the updated keywords
-      const updatedKeywords = [post.category];
-
-      for (let i = 0; i < currentUser.personalizeKeyword?.length; i++) {
->>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
         if (currentUser.personalizeKeyword[i] !== post.category) {
           updatedKeywords.push(currentUser.personalizeKeyword[i]);
         }
       }
-<<<<<<< HEAD
-  
-      
+
       for (let i = 0; i < currentUser.favoriteAuthors.length; i++) {
         if (currentUser.favoriteAuthors[i] !== post.userId) {
           updatedAuthors.push(currentUser.favoriteAuthors[i]);
         }
       }
-  
-      
+
       const combinedUpdates = {
         personalizeKeyword: updatedKeywords,
-        favoriteAuthors: updatedAuthors
+        favoriteAuthors: updatedAuthors,
       };
-  
-      
-      const response = await fetch(`api/user/updateRecommendationKeywords/${currentUser._id}`, {
-        method: 'PUT',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${token}`,
-        },
-        body: JSON.stringify(combinedUpdates),
-      });
-=======
-
-      // console.log("after adding keyword");
-      // console.log(updatedKeywords);
 
       const response = await fetch(
-        `api/user/updateKeywords/${currentUser._id}`,
+        `api/user/updateRecommendationKeywords/${currentUser._id}`,
         {
           method: "PUT",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ personalizeKeyword: updatedKeywords }),
+          body: JSON.stringify(combinedUpdates),
         }
       );
->>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
 
+      // console.log("after adding keyword");
+      // console.log(updatedKeywords);
       const data = await response.json();
       if (!response.ok) {
         dispatch(updateFailure(data.message));
@@ -89,19 +62,12 @@ export default function PostCard({ post }) {
         dispatch(updateSuccess(data));
         setUpdateUserSuccess("User's profile updated successfully");
       }
-<<<<<<< HEAD
-     } catch (error) {
-      console.error('Error updating keywords:', error);
-      setUpdateUserError('Error updating keywords');
-=======
     } catch (error) {
       console.error("Error updating keywords:", error);
       setUpdateUserError("Error updating keywords");
->>>>>>> 30b54fd46bd5a2486273d1f5fb0e8d6103707b09
     }
-
   };
-  
+
   return (
     <div className="group relative w-full border border-teal-500 hover:border-2 h-[400px] overflow-hidden rounded-lg sm:w-[400px] transition-all">
       <Link to={`/post/${post.slug}`}>
